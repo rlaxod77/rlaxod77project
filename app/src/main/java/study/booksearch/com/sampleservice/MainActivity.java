@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,48 +41,53 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     ListView listView;
     SingerAdepter adepter;
-
-
+    Button searchButton;
+    String keyword;
+    String kedywordData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.listView);
-
-        //Volley 셋팅 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        JsonTextView = findViewById(R.id.JsonTextView);
-        queue = Volley.newRequestQueue(this);
-        String url = "https://dapi.kakao.com/v3/search/book?target=title&query=testing";
-
-
-        CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        searchButton = findViewById(R.id.buttonSearch);
+        editText = findViewById(R.id.editText);
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(JSONObject response) {
-                Log.e(TAG, response.toString());
-                try {
-                    JSONArray jsonArrayDoumnets = response.getJSONArray("documents");
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject jsonDocument = jsonArrayDoumnets.getJSONObject(i);
-                        JsonTextView.append(jsonDocument.getString("title"));
+            public void onClick(View view) {
+                keyword = editText.getText().toString();
+                //Volley 셋팅 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+                JsonTextView = findViewById(R.id.JsonTextView);
+                queue = Volley.newRequestQueue(getApplicationContext());
+                String url = "https://dapi.kakao.com/v3/search/book?target=title&query=" + keyword;
+
+
+                CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e(TAG, response.toString());
+                        try {
+                            JSONArray jsonArrayDoumnets = response.getJSONArray("documents");
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonDocument = jsonArrayDoumnets.getJSONObject(i);
+                                JsonTextView.append(jsonDocument.getString("title"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                );
+                queue.add(customJSONObject);
+                // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
             }
-        }
-        );
-        queue.add(customJSONObject);
-        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-
-
-
+        });
 
         adepter = new SingerAdepter();
 

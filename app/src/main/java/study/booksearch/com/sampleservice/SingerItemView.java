@@ -57,4 +57,10 @@ public class SingerItemView extends BaseAdapter {
     public Object getItem(int positon) {
         return listViewItemlist.get(positon);
     }
+
+    public void addItem(String title){
+        SingerItem item = new SingerItem();
+        item.setTitle(title);
+        listViewItemlist.add(item);
+    }
 }

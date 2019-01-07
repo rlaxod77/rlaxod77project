@@ -3,51 +3,58 @@ package study.booksearch.com.sampleservice;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class SingerItemView extends LinearLayout {
+import java.util.ArrayList;
 
-    TextView textView;
-    TextView textView2;
-    TextView textView3;
-    ImageView imageView;
+public class SingerItemView extends BaseAdapter {
 
+    //아이템 데이터 리스트
 
-    public SingerItemView(Context context) {
-        super(context);
-        init(context);
+    private ArrayList<SingerItem> listViewItemlist = new ArrayList<SingerItem>();
+
+    public SingerItemView(){
+
     }
 
-    public SingerItemView(Context context, AttributeSet attrs){
-        //이건머야 AttributeSet
-        super(context,attrs);
-        init(context);
+    //Adapter에 사용되는 데이터의 계수를 리턴 : 필수
+    @Override
+    public int getCount() {
+        return listViewItemlist.size();
     }
 
-    public void init(Context context){
-        LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.singer_item, this , true);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final Context context = parent.getContext();
 
-        textView = findViewById(R.id.textView);
-        textView2 = findViewById(R.id.textView2);
-        textView3 = findViewById(R.id.textView3);
-        imageView = findViewById(R.id.imageView);
-    }
+        if(convertView == null){
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //DATA SET (listViewItemlist에 위치한 데이터 참조 획득
+            SingerItem listViewItem = listViewItemlist.get(position);
 
-    public void setName(String name){
-        textView.setText(name);
-    }
-    public void setMobile(String mobile){
-        textView2.setText(mobile);
-    }
-    public void setAge(int age){
-        textView3.setText(String.valueOf(age));
-    }
-    public void setImage(int resId){
-        imageView.setImageResource(resId);
+            convertView = inflater.inflate(R.layout.singer_item,parent,false);
+            TextView titleTextView = convertView.findViewById(R.id.titleView);
+
+            titleTextView.setText(listViewItem.getTitle());
+        }
+
+
+        return convertView;
     }
 
+    @Override
+    public long getItemId(int positon) {
+        return positon;
+    }
+
+    @Override
+    public Object getItem(int positon) {
+        return listViewItemlist.get(positon);
+    }
 }

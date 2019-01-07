@@ -7,6 +7,10 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/JsonTextView"/>
 
     <LinearLayout
         android:id="@+id/layout1"

@@ -26,11 +26,6 @@ public class VolleyTest extends AppCompatActivity {
     private static final String TAG = "MAIN";
     TextView tv;
     private RequestQueue queue;
-
-    private String id;
-    private String pw;
-    private JSONArray language;
-    private JSONObject item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,17 +42,6 @@ public class VolleyTest extends AppCompatActivity {
             public void onResponse(JSONObject jsonRoot) {
 
                 Log.e(TAG, jsonRoot.toString());
-
-                try{
-//                    JSONObject jsonRoot = response.getJSONObject(response.toString());
-                    JSONArray jsonArrayDocuments = jsonRoot.getJSONArray("documents");
-                    for (int i = 0; i < jsonArrayDocuments.length(); i++) {
-                        JSONObject jsonDocument = jsonArrayDocuments.getJSONObject(i);
-                        tv.append(jsonDocument.getString("title"));
-                    }
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
 
             }
         }, new Response.ErrorListener() {
@@ -80,8 +64,7 @@ public class VolleyTest extends AppCompatActivity {
         }
     }
 
-    class CustomJSONObject extends JsonObjectRequest{
-
+   class CustomJSONObject extends JsonObjectRequest{
         public CustomJSONObject(int method, String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
             super(method, url, jsonRequest, listener, errorListener);
         }
@@ -91,7 +74,7 @@ public class VolleyTest extends AppCompatActivity {
         }
 
         @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
+          public Map<String, String> getHeaders() throws AuthFailureError {
             String appkey = "KakaoAK 3f97e64d6d8a56fbebe6ce5f6ad593c6";
             Map<String,String> params = new HashMap();
             params.put("Authorization" , appkey);

@@ -4,6 +4,15 @@ public class SingerItem{
 
     String title;
     String authors;
+    String ImageUrl;
+
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
+    }
 
     public String getTitle() {
         return title;

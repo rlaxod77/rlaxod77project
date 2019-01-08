@@ -82,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
                                 String authors =jsonDocument.getString("authors");
                                 String authors2 = authors.replace("[", "");
                                 String authors3 = authors2.replace("]","");
-                                adapter.addItem(title,authors3;
+                                String ImageUrl = jsonDocument.getString("thumbnail");
+
+                                adapter.addItem(title,authors3,ImageUrl);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -10,10 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class SingerItemView extends BaseAdapter {
-
+    Context context;
     //아이템 데이터 리스트
 
     private ArrayList<SingerItem> listViewItemlist = new ArrayList<SingerItem>();
@@ -21,6 +23,7 @@ public class SingerItemView extends BaseAdapter {
     public SingerItemView(){
 
     }
+
 
     //Adapter에 사용되는 데이터의 계수를 리턴 : 필수
     @Override
@@ -31,7 +34,7 @@ public class SingerItemView extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Context context = parent.getContext();
+            final Context context = parent.getContext();
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,10 +43,16 @@ public class SingerItemView extends BaseAdapter {
 
             convertView = inflater.inflate(R.layout.singer_item,parent,false);
             TextView titleTextView = convertView.findViewById(R.id.titleView);
-            TextView publisherTextView = convertView.findViewById(R.id.authors);
+            TextView authors = convertView.findViewById(R.id.authors);
+            ImageView imageView = convertView.findViewById(R.id.ImageView);
 
             titleTextView.setText(listViewItem.getTitle());
-            publisherTextView.setText(listViewItem.getAuthors());
+            authors.setText(listViewItem.getAuthors());
+            //이미지뷰
+            Glide.with(context).load(listViewItem.getImageUrl()).into(imageView);
+
+
+
         }
 
 
@@ -60,10 +69,11 @@ public class SingerItemView extends BaseAdapter {
         return listViewItemlist.get(positon);
     }
 
-    public void addItem(String title , String authors){
+    public void addItem(String title , String authors, String ImageUrl){
         SingerItem item = new SingerItem();
         item.setTitle(title);
         item.setAuthors(authors);
+        item.setImageUrl(ImageUrl);
         listViewItemlist.add(item);
     }
 }

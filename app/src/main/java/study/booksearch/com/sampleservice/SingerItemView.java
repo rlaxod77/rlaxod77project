@@ -40,10 +40,10 @@ public class SingerItemView extends BaseAdapter {
 
             convertView = inflater.inflate(R.layout.singer_item,parent,false);
             TextView titleTextView = convertView.findViewById(R.id.titleView);
-            TextView publisherTextView = convertView.findViewById(R.id.publisher);
+            TextView publisherTextView = convertView.findViewById(R.id.authors);
 
             titleTextView.setText(listViewItem.getTitle());
-            publisherTextView.setText(listViewItem.getPublisher());
+            publisherTextView.setText(listViewItem.getAuthors());
         }
 
 
@@ -60,10 +60,10 @@ public class SingerItemView extends BaseAdapter {
         return listViewItemlist.get(positon);
     }
 
-    public void addItem(String title , String publisher){
+    public void addItem(String title , String authors){
         SingerItem item = new SingerItem();
         item.setTitle(title);
-        item.setPublisher(publisher);
+        item.setAuthors(authors);
         listViewItemlist.add(item);
     }
 }

@@ -79,8 +79,10 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject jsonDocument = jsonArrayDoumnets.getJSONObject(i);
                                 listView.setAdapter(adapter);
                                 String title = jsonDocument.getString("title");
-                                String publisher =jsonDocument.getString("publisher");
-                                adapter.addItem(title,publisher);
+                                String authors =jsonDocument.getString("authors");
+                                String authors2 = authors.replace("[", "");
+                                String authors3 = authors2.replace("]","");
+                                adapter.addItem(title,authors3;
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

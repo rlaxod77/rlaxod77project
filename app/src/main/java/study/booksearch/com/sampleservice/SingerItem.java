@@ -3,15 +3,7 @@ package study.booksearch.com.sampleservice;
 public class SingerItem{
 
     String title;
-    String publisher;
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
+    String authors;
 
     public String getTitle() {
         return title;
@@ -19,5 +11,13 @@ public class SingerItem{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(String authors) {
+        this.authors = authors;
     }
 }

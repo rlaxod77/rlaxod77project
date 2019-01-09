@@ -76,4 +76,6 @@ public class SingerItemView extends BaseAdapter {
         item.setImageUrl(ImageUrl);
         listViewItemlist.add(item);
     }
+
+
 }

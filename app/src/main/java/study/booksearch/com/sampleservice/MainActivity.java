@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     Button searchButton;
     SingerItemView adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,19 +75,27 @@ public class MainActivity extends AppCompatActivity {
                 CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        String author ="";
                         Log.e(TAG, response.toString());
+
                         try {
                             JSONArray jsonArrayDoumnets = response.getJSONArray("documents");
                             for (int i = 0; i < jsonArrayDoumnets.length(); i++) {
                                 JSONObject jsonDocument = jsonArrayDoumnets.getJSONObject(i);
-                                listView.setAdapter(adapter);
-                                String title = jsonDocument.getString("title");
-                                String authors =jsonDocument.getString("authors");
-                                String authors2 = authors.replace("[", "");
-                                String authors3 = authors2.replace("]","");
-                                String ImageUrl = jsonDocument.getString("thumbnail");
 
-                                adapter.addItem(title,authors3,ImageUrl);
+
+                                JSONArray authorsArray =  jsonDocument.getJSONArray("authors");
+                                for(int j = 0; j < authorsArray.length(); j++){
+                                    JSONObject authorsList = authorsArray.getJSONObject(j);
+                                    String b =  authorsList.getString();
+
+                                }
+
+                                listView.setAdapter(adapter);
+
+                                String title = jsonDocument.getString("title");
+                                String ImageUrl = jsonDocument.getString("thumbnail");
+                                adapter.addItem(title,author,ImageUrl);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

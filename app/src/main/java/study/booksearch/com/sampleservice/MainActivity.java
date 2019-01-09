@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.buttonSearch);
         editText = findViewById(R.id.editText);
         adapter = new SingerItemView();
-        listView = findViewById(R.id.listView);
+
 
 
 
@@ -69,13 +69,16 @@ public class MainActivity extends AppCompatActivity {
                 JsonTextView = findViewById(R.id.JsonTextView);
                 queue = Volley.newRequestQueue(getApplicationContext());
                 String url = "https://dapi.kakao.com/v3/search/book?target=title&query=" + keyword;
+                listView = findViewById(R.id.listView);
+                listView.setAdapter(adapter);
+
 
 
 
                 CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        String author ="";
+
                         Log.e(TAG, response.toString());
 
                         try {
@@ -83,15 +86,12 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArrayDoumnets.length(); i++) {
                                 JSONObject jsonDocument = jsonArrayDoumnets.getJSONObject(i);
 
-
+                                String author ="";
                                 JSONArray authorsArray =  jsonDocument.getJSONArray("authors");
                                 for(int j = 0; j < authorsArray.length(); j++){
-                                    JSONObject authorsList = authorsArray.getJSONObject(j);
-                                    String b =  authorsList.getString();
-
+                                    String authorsList = authorsArray.getString(j);
+                                    author =   author + authorsList;
                                 }
-
-                                listView.setAdapter(adapter);
 
                                 String title = jsonDocument.getString("title");
                                 String ImageUrl = jsonDocument.getString("thumbnail");

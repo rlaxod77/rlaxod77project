@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class SingerItemView extends BaseAdapter {
     Context context;
+
     //아이템 데이터 리스트
 
     private ArrayList<SingerItem> listViewItemlist = new ArrayList<SingerItem>();
@@ -23,6 +24,7 @@ public class SingerItemView extends BaseAdapter {
     public SingerItemView(){
 
     }
+
 
 
     //Adapter에 사용되는 데이터의 계수를 리턴 : 필수
@@ -34,7 +36,9 @@ public class SingerItemView extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+            CustomViewHolder holder;
             final Context context = parent.getContext();
+
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -42,6 +46,8 @@ public class SingerItemView extends BaseAdapter {
             SingerItem listViewItem = listViewItemlist.get(position);
 
             convertView = inflater.inflate(R.layout.singer_item,parent,false);
+
+
             TextView titleTextView = convertView.findViewById(R.id.titleView);
             TextView authors = convertView.findViewById(R.id.authors);
             ImageView imageView = convertView.findViewById(R.id.ImageView);

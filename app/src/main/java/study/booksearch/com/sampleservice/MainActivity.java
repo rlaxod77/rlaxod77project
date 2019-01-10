@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                                 JSONArray authorsArray =  jsonDocument.getJSONArray("authors");
                                 for(int j = 0; j < authorsArray.length(); j++){
                                     String authorsList = authorsArray.getString(j);
-                                    author =   author + authorsList;
+                                    author = author + authorsList;
                                 }
 
                                 final String title = jsonDocument.getString("title");

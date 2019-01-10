@@ -19,15 +19,19 @@ public class BookDetailView extends AppCompatActivity {
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
+        String title2 = "책제목 : ";
+        String title3 = title2 + title;
         String author = intent.getStringExtra("author");
+        String autor2 = "글쓴이 : ";
+        String autor3 = autor2 + author;
         String ImageUrl = intent.getStringExtra("ImageUrl");
 
         ImageView BookImg = findViewById(R.id.DetailImageView);
         TextView BookTitle = findViewById(R.id.DetailTitleVeiw);
         TextView BookAuthor = findViewById(R.id.DetailAuthorVeiw);
 
-        BookTitle.setText(title);
-        BookAuthor.setText(author);
+        BookTitle.setText(title3);
+        BookAuthor.setText(autor3);
         Glide.with(this).load(ImageUrl).into(BookImg);
 
 

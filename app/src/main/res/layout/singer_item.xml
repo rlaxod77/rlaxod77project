@@ -22,7 +22,6 @@
                     android:layout_height="50dp"
                     android:id="@+id/titleView"
                     android:textSize="15dp"
-                    android:text="test1"
                     android:textStyle="bold"
                     android:textColor="#ff5805"/>
                 <TextView
@@ -30,7 +29,6 @@
                     android:layout_height="50dp"
                     android:id="@+id/authors"
                     android:textSize="15dp"
-                    android:text="test2"
                     android:textStyle="bold"
                     android:textColor="#ff5805"/>
         </LinearLayout>

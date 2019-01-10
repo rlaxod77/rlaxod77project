@@ -1,5 +1,6 @@
 package study.booksearch.com.sampleservice;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
                 CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -93,9 +93,12 @@ public class MainActivity extends AppCompatActivity {
                                     author =   author + authorsList;
                                 }
 
-                                String title = jsonDocument.getString("title");
-                                String ImageUrl = jsonDocument.getString("thumbnail");
+                                final String title = jsonDocument.getString("title");
+                                final String ImageUrl = jsonDocument.getString("thumbnail");
+
                                 adapter.addItem(title,author,ImageUrl);
+
+                                
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

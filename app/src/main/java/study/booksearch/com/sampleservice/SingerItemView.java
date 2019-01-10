@@ -1,10 +1,12 @@
 package study.booksearch.com.sampleservice;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +38,7 @@ public class SingerItemView extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-            CustomViewHolder holder;
+
             final Context context = parent.getContext();
 
 
@@ -60,6 +62,19 @@ public class SingerItemView extends BaseAdapter {
 
 
         }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                SingerItem singerItem = new SingerItem();
+                Intent intent = new Intent(getApplicationContext(), BookDetailView.class );
+
+                intent.putExtra("title", adapter.getItem(i));
+                intent.putExtra("author", singerItem.getAuthors());
+                intent.putExtra("ImageUrl", singerItem.getImageUrl());
+                startActivity(intent);
+
+            }
+        });
 
 
         return convertView;

@@ -18,12 +18,18 @@ import java.util.ArrayList;
 
 public class SingerItemView extends BaseAdapter {
     Context context;
+    int layout;
+    LayoutInflater inf;
 
     //아이템 데이터 리스트
 
-    private ArrayList<SingerItem> listViewItemlist = new ArrayList<SingerItem>();
+    private ArrayList<SingerItem> listViewItemlist;
 
-    public SingerItemView(){
+    public SingerItemView(Context context, int layout, ArrayList<SingerItem> listViewItemlist){
+        this.context = context;
+        this.layout = layout;
+        this.listViewItemlist = listViewItemlist;
+        inf = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
@@ -38,10 +44,6 @@ public class SingerItemView extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-            final Context context = parent.getContext();
-
-
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             //DATA SET (listViewItemlist에 위치한 데이터 참조 획득
@@ -62,21 +64,6 @@ public class SingerItemView extends BaseAdapter {
 
 
         }
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SingerItem singerItem = new SingerItem();
-                Intent intent = new Intent(getApplicationContext(), BookDetailView.class );
-
-                intent.putExtra("title", adapter.getItem(i));
-                intent.putExtra("author", singerItem.getAuthors());
-                intent.putExtra("ImageUrl", singerItem.getImageUrl());
-                startActivity(intent);
-
-            }
-        });
-
-
         return convertView;
     }
 
@@ -88,14 +75,6 @@ public class SingerItemView extends BaseAdapter {
     @Override
     public Object getItem(int positon) {
         return listViewItemlist.get(positon);
-    }
-
-    public void addItem(String title , String authors, String ImageUrl){
-        SingerItem item = new SingerItem();
-        item.setTitle(title);
-        item.setAuthors(authors);
-        item.setImageUrl(ImageUrl);
-        listViewItemlist.add(item);
     }
 
 

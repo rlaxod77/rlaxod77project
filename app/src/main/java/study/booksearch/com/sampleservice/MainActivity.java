@@ -1,6 +1,7 @@
 package study.booksearch.com.sampleservice;
 
 import android.content.Intent;
+import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     Button searchButton;
     SingerItemView adapter;
+    ArrayList<SingerItem> singerItems = new ArrayList<SingerItem>();
 
 
     @Override
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         searchButton = findViewById(R.id.buttonSearch);
         editText = findViewById(R.id.editText);
-        adapter = new SingerItemView();
 
 
 
@@ -70,9 +71,23 @@ public class MainActivity extends AppCompatActivity {
                 JsonTextView = findViewById(R.id.JsonTextView);
                 queue = Volley.newRequestQueue(getApplicationContext());
                 String url = "https://dapi.kakao.com/v3/search/book?target=title&query=" + keyword;
+
+                adapter = new SingerItemView(getApplicationContext(),R.layout.singer_item,singerItems);
                 listView = findViewById(R.id.listView);
                 listView.setAdapter(adapter);
 
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(getApplicationContext(),BookDetailView.class);
+
+                        intent.putExtra("title", singerItems.get(i).title);
+                        intent.putExtra("author", singerItems.get(i).authors);
+                        intent.putExtra("ImageUrl", singerItems.get(i).ImageUrl);
+
+                        startActivity(intent);
+                    }
+                });
 
 
                 CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -96,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                                 final String title = jsonDocument.getString("title");
                                 final String ImageUrl = jsonDocument.getString("thumbnail");
 
-                                adapter.addItem(title,author,ImageUrl);
+                                singerItems.add(new SingerItem(title,author,ImageUrl));
 
                                 
                             }
@@ -154,3 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+
+
+
+

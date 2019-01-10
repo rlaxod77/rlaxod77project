@@ -6,6 +6,16 @@ public class SingerItem{
     String authors;
     String ImageUrl;
 
+    public SingerItem() {
+    }
+
+
+    public SingerItem(String title, String authors, String imageUrl) {
+        this.title = title;
+        this.authors = authors;
+        this.ImageUrl = imageUrl;
+    }
+
     public String getImageUrl() {
         return ImageUrl;
     }

@@ -24,6 +24,7 @@ public class SingerItemView extends BaseAdapter {
     //아이템 데이터 리스트
 
     private ArrayList<SingerItem> listViewItemlist;
+    ViewHolder viewHolder;
 
     public SingerItemView(Context context, int layout, ArrayList<SingerItem> listViewItemlist){
         this.context = context;
@@ -44,26 +45,34 @@ public class SingerItemView extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            viewHolder = new ViewHolder();
+           convertView =  LayoutInflater.from(context).inflate(R.layout.singer_item,null);
+
             //DATA SET (listViewItemlist에 위치한 데이터 참조 획득
-            SingerItem listViewItem = listViewItemlist.get(position);
+            //SingerItem listViewItem = listViewItemlist.get(position);
+            viewHolder = new ViewHolder();
 
-            convertView = inflater.inflate(R.layout.singer_item,parent,false);
 
+            viewHolder.TextView  = (TextView)convertView.findViewById(R.id.titleView);
+            viewHolder.authors = (TextView)convertView.findViewById(R.id.authors);
+            viewHolder.imageView =(ImageView)convertView.findViewById(R.id.ImageView);
+            convertView.setTag(viewHolder);
 
-            TextView titleTextView = convertView.findViewById(R.id.titleView);
-            TextView authors = convertView.findViewById(R.id.authors);
-            ImageView imageView = convertView.findViewById(R.id.ImageView);
-
-            titleTextView.setText(listViewItem.getTitle());
-            authors.setText(listViewItem.getAuthors());
+            //viewHolder.TextView.setText(listViewItem.getTitle());
+            //viewHolder.authors.setText(listViewItem.getAuthors());
             //이미지뷰
-            Glide.with(context).load(listViewItem.getImageUrl()).into(imageView);
+            //Glide.with(context).load(listViewItem.getImageUrl()).into(viewHolder.imageView);
 
 
 
+        }else {
+            viewHolder = (ViewHolder)convertView.getTag();
         }
+        viewHolder.TextView.setText(listViewItemlist.get(position).getTitle());
+        viewHolder.authors.setText(listViewItemlist.get(position).getAuthors());
+        Glide.with(context).load(listViewItemlist.get(position).getImageUrl()).into(viewHolder.imageView);
         return convertView;
     }
 
@@ -75,6 +84,13 @@ public class SingerItemView extends BaseAdapter {
     @Override
     public Object getItem(int positon) {
         return listViewItemlist.get(positon);
+    }
+
+    class ViewHolder{
+        TextView TextView;
+        TextView authors;
+        ImageView imageView;
+
     }
 
 

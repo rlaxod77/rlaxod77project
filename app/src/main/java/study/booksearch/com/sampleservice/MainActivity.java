@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 //Volley 셋팅 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
                 JsonTextView = findViewById(R.id.JsonTextView);
                 queue = Volley.newRequestQueue(getApplicationContext());
-                String url = "https://dapi.kakao.com/v3/search/book?target=title&query=" + keyword;
+                String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
 
                 adapter = new SingerItemView(getApplicationContext(),R.layout.singer_item,singerItems);
                 listView = findViewById(R.id.listView);

@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/JsonTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/JsonTextView"/>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <EditText
+            android:id="@+id/editText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:hint="책이름" />
+            android:hint="책이름"
+            android:imeOptions="actionDone" />
+
         <Button
+            android:id="@+id/buttonSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="검색"
-            android:id="@+id/buttonSearch"/>
+            android:text="검색" />
     </LinearLayout>
 
 
     <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listView">
-    </ListView>
+        android:layout_height="match_parent"></ListView>
 
 
 </LinearLayout>

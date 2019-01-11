@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-public class BookDetailView extends AppCompatActivity {
+public class BookDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,6 @@ public class BookDetailView extends AppCompatActivity {
         BookTitle.setText(title3);
         BookAuthor.setText(autor3);
         Glide.with(this).load(ImageUrl).into(BookImg);
-
-
 
 
     }

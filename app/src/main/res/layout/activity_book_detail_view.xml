@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookDetailView"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".BookDetailActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
         android:id="@+id/DetailImageView"
-        />
-    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp" />
+
+    <TextView
         android:id="@+id/DetailTitleVeiw"
-        android:textSize="20dp"/>
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp" />
+
+    <TextView
         android:id="@+id/DetailAuthorVeiw"
-        android:textSize="20dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp" />
 
 </LinearLayout>

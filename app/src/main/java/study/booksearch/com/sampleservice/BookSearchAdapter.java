@@ -1,39 +1,34 @@
 package study.booksearch.com.sampleservice;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class SingerItemView extends BaseAdapter {
+public class BookSearchAdapter extends BaseAdapter {
     Context context;
     int layout;
     LayoutInflater inf;
 
     //아이템 데이터 리스트
 
-    private ArrayList<SingerItem> listViewItemlist;
+    private ArrayList<BookItemActivity> listViewItemlist;
     ViewHolder viewHolder;
 
-    public SingerItemView(Context context, int layout, ArrayList<SingerItem> listViewItemlist){
+    public BookSearchAdapter(Context context, int layout, ArrayList<BookItemActivity> listViewItemlist) {
         this.context = context;
         this.layout = layout;
         this.listViewItemlist = listViewItemlist;
-        inf = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
-
 
 
     //Adapter에 사용되는 데이터의 계수를 리턴 : 필수
@@ -46,18 +41,18 @@ public class SingerItemView extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView == null){
+        if (convertView == null) {
             viewHolder = new ViewHolder();
-           convertView =  LayoutInflater.from(context).inflate(R.layout.singer_item,null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.activity_book_item, null);
 
             //DATA SET (listViewItemlist에 위치한 데이터 참조 획득
-            //SingerItem listViewItem = listViewItemlist.get(position);
+            //BookItemActivity listViewItem = listViewItemlist.get(position);
             viewHolder = new ViewHolder();
 
 
-            viewHolder.TextView  = (TextView)convertView.findViewById(R.id.titleView);
-            viewHolder.authors = (TextView)convertView.findViewById(R.id.authors);
-            viewHolder.imageView =(ImageView)convertView.findViewById(R.id.ImageView);
+            viewHolder.TextView = (TextView) convertView.findViewById(R.id.titleView);
+            viewHolder.authors = (TextView) convertView.findViewById(R.id.authors);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.ImageView);
             convertView.setTag(viewHolder);
 
             //viewHolder.TextView.setText(listViewItem.getTitle());
@@ -66,9 +61,8 @@ public class SingerItemView extends BaseAdapter {
             //Glide.with(context).load(listViewItem.getImageUrl()).into(viewHolder.imageView);
 
 
-
-        }else {
-            viewHolder = (ViewHolder)convertView.getTag();
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.TextView.setText(listViewItemlist.get(position).getTitle());
         viewHolder.authors.setText(listViewItemlist.get(position).getAuthors());
@@ -86,7 +80,7 @@ public class SingerItemView extends BaseAdapter {
         return listViewItemlist.get(positon);
     }
 
-    class ViewHolder{
+    class ViewHolder {
         TextView TextView;
         TextView authors;
         ImageView imageView;

@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".VolleyTest" />
-        <activity android:name=".BookDetailView"></activity>
+        <activity android:name=".BookDetailActivity"></activity>
     </application>
 
 </manifest>

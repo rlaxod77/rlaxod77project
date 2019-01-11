@@ -1,21 +1,16 @@
 package study.booksearch.com.sampleservice;
 
 import android.content.Intent;
-import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,7 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,12 +26,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-//Volley 셋팅
+    //Volley 셋팅
     private static final String TAG = "MAIN";
     private RequestQueue queue;
     TextView JsonTextView;
@@ -46,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     ListView listView;
     Button searchButton;
-    SingerItemView adapter;
-    ArrayList<SingerItem> singerItems = new ArrayList<SingerItem>();
+    BookSearchAdapter adapter;
+    ArrayList<BookItemActivity> bookItemActivities = new ArrayList<BookItemActivity>();
 
 
     @Override
@@ -60,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.editText);
 
 
-
-
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,18 +62,18 @@ public class MainActivity extends AppCompatActivity {
                 queue = Volley.newRequestQueue(getApplicationContext());
                 String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
 
-                adapter = new SingerItemView(getApplicationContext(),R.layout.singer_item,singerItems);
+                adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
                 listView = findViewById(R.id.listView);
                 listView.setAdapter(adapter);
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = new Intent(getApplicationContext(),BookDetailView.class);
+                        Intent intent = new Intent(getApplicationContext(), BookDetailActivity.class);
 
-                        intent.putExtra("title", singerItems.get(i).title);
-                        intent.putExtra("author", singerItems.get(i).authors);
-                        intent.putExtra("ImageUrl", singerItems.get(i).ImageUrl);
+                        intent.putExtra("title", bookItemActivities.get(i).title);
+                        intent.putExtra("author", bookItemActivities.get(i).authors);
+                        intent.putExtra("ImageUrl", bookItemActivities.get(i).ImageUrl);
 
                         startActivity(intent);
                     }
@@ -101,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArrayDoumnets.length(); i++) {
                                 JSONObject jsonDocument = jsonArrayDoumnets.getJSONObject(i);
 
-                                String author ="";
-                                JSONArray authorsArray =  jsonDocument.getJSONArray("authors");
-                                for(int j = 0; j < authorsArray.length(); j++){
+                                String author = "";
+                                JSONArray authorsArray = jsonDocument.getJSONArray("authors");
+                                for (int j = 0; j < authorsArray.length(); j++) {
                                     String authorsList = authorsArray.getString(j);
                                     author = author + authorsList;
                                 }
@@ -111,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
                                 final String title = jsonDocument.getString("title");
                                 final String ImageUrl = jsonDocument.getString("thumbnail");
 
-                                singerItems.add(new SingerItem(title,author,ImageUrl));
+                                bookItemActivities.add(new BookItemActivity(title, author, ImageUrl));
 
-                                
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -135,14 +125,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     //볼리관련 소스2 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     @Override
     protected void onStop() {
         super.onStop();
-        if(queue !=null){
+        if (queue != null) {
             queue.cancelAll(TAG);
         }
     }
@@ -158,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         public CustomJSONObject(String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
             super(url, jsonRequest, listener, errorListener);
         }
+
         //볼리소스 4 헤더값 전달 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
         @Override
         public Map<String, String> getHeaders() throws AuthFailureError {

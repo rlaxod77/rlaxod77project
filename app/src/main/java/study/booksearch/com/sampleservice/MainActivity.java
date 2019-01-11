@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     //Volley 셋팅
     private static final String TAG = "MAIN";
     private RequestQueue queue;
-    TextView JsonTextView;
+
 /////////////////////////////////////////////////////
 
     EditText editText;
@@ -57,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String keyword = editText.getText().toString();
-                //Volley 셋팅 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-                JsonTextView = findViewById(R.id.JsonTextView);
+                //Volley 셋팅
                 queue = Volley.newRequestQueue(getApplicationContext());
                 String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
-
+                //
                 adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
                 listView = findViewById(R.id.listView);
                 listView.setAdapter(adapter);
@@ -79,11 +78,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
+                //Volley 셋팅2
                 CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         Log.e(TAG, response.toString());
 
                         try {
@@ -119,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 );
                 queue.add(customJSONObject);
-                // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+                //
 
             }
         });
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //볼리관련 소스2 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    //Volley 셋팅3
     @Override
     protected void onStop() {
         super.onStop();
@@ -135,29 +133,8 @@ public class MainActivity extends AppCompatActivity {
             queue.cancelAll(TAG);
         }
     }
-    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    //
 
-    //볼리관련 소스3 JsonObjectRequest 커스텀ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    class CustomJSONObject extends JsonObjectRequest {
-
-        public CustomJSONObject(int method, String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
-            super(method, url, jsonRequest, listener, errorListener);
-        }
-
-        public CustomJSONObject(String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
-            super(url, jsonRequest, listener, errorListener);
-        }
-
-        //볼리소스 4 헤더값 전달 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            String appkey = "KakaoAK 3f97e64d6d8a56fbebe6ce5f6ad593c6";
-            Map<String, String> params = new HashMap();
-            params.put("Authorization", appkey);
-            return params;
-        }
-
-    }
 }
 
 

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -55,10 +56,14 @@ public class MainActivity extends AppCompatActivity {
 
         searchButton = findViewById(R.id.buttonSearch);
         editText = findViewById(R.id.serach_edit_text);
+        adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
+        listView = findViewById(R.id.listView);
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bookItemActivities.clear();
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 keyword = editText.getText().toString();
@@ -71,11 +76,10 @@ public class MainActivity extends AppCompatActivity {
     public void listOpenMethod() {
         queue = Volley.newRequestQueue(getApplicationContext());
         String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
+        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
         CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
-                listView = findViewById(R.id.listView);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

@@ -12,12 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 //Volley 셋팅4
-public class CustomJSONObject extends JsonObjectRequest {
-    public CustomJSONObject(int method, String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
+public class CustomJSONObjectRequest extends JsonObjectRequest {
+    public CustomJSONObjectRequest(int method, String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
         super(method, url, jsonRequest, listener, errorListener);
     }
 
-    public CustomJSONObject(String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
+    public CustomJSONObjectRequest(String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
         super(url, jsonRequest, listener, errorListener);
     }
 

@@ -1,11 +1,13 @@
 package study.booksearch.com.sampleservice;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,10 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
 /////////////////////////////////////////////////////
 
-    EditText editText;
+
     ListView listView;
     Button searchButton;
     BookSearchAdapter adapter;
+    String keyword;
+    EditText editText;
     ArrayList<BookItemActivity> bookItemActivities = new ArrayList<BookItemActivity>();
 
 
@@ -50,21 +54,29 @@ public class MainActivity extends AppCompatActivity {
 
 
         searchButton = findViewById(R.id.buttonSearch);
-        editText = findViewById(R.id.editText);
-
+        editText = findViewById(R.id.serach_edit_text);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String keyword = editText.getText().toString();
-                //Volley 셋팅
-                queue = Volley.newRequestQueue(getApplicationContext());
-                String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
-                //
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                keyword = editText.getText().toString();
+                listOpenMethod();
+            }
+        });
+    }
+
+
+    public void listOpenMethod() {
+        queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
+        CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
                 adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
                 listView = findViewById(R.id.listView);
                 listView.setAdapter(adapter);
-
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -77,53 +89,44 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+                Log.e(TAG, response.toString());
 
-                //Volley 셋팅2
-                CustomJSONObject customJSONObject = new CustomJSONObject(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e(TAG, response.toString());
+                try {
+                    JSONArray jsonArrayDoumnets = response.getJSONArray("documents");
+                    for (int i = 0; i < jsonArrayDoumnets.length(); i++) {
+                        JSONObject jsonDocument = jsonArrayDoumnets.getJSONObject(i);
 
-                        try {
-                            JSONArray jsonArrayDoumnets = response.getJSONArray("documents");
-                            for (int i = 0; i < jsonArrayDoumnets.length(); i++) {
-                                JSONObject jsonDocument = jsonArrayDoumnets.getJSONObject(i);
-
-                                String author = "";
-                                JSONArray authorsArray = jsonDocument.getJSONArray("authors");
-                                for (int j = 0; j < authorsArray.length(); j++) {
-                                    String authorsList = authorsArray.getString(j);
-                                    author = author + authorsList;
-                                }
-
-                                final String title = jsonDocument.getString("title");
-                                final String ImageUrl = jsonDocument.getString("thumbnail");
-
-                                bookItemActivities.add(new BookItemActivity(title, author, ImageUrl));
-
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        String author = "";
+                        JSONArray authorsArray = jsonDocument.getJSONArray("authors");
+                        for (int j = 0; j < authorsArray.length(); j++) {
+                            String authorsList = authorsArray.getString(j);
+                            author = author + authorsList;
                         }
 
-                    }
+                        final String title = jsonDocument.getString("title");
+                        final String ImageUrl = jsonDocument.getString("thumbnail");
 
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                        bookItemActivities.add(new BookItemActivity(title, author, ImageUrl));
+
 
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                );
-                queue.add(customJSONObject);
-                //
 
             }
-        });
 
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        }
+        );
+        queue.add(customJSONObject);
+        //
     }
+
 
     //Volley 셋팅3
     @Override
@@ -133,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
             queue.cancelAll(TAG);
         }
     }
-    //
 
 }
 

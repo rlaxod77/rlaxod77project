@@ -6,36 +6,28 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/JsonTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <EditText
-            android:id="@+id/editText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="책이름"
-            android:imeOptions="actionDone" />
-
+            android:id="@+id/serach_edit_text"/>
         <Button
             android:id="@+id/buttonSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="검색" />
+            android:text="검색"
+            />
     </LinearLayout>
-
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
-
+        android:layout_height="match_parent"
+        >
+    </ListView>
 
 </LinearLayout>

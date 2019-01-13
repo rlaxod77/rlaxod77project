@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MAIN";
     private RequestQueue queue;
 
-/////////////////////////////////////////////////////
-
     Utility utility;
     ListView listView;
     Button searchButton;
@@ -60,33 +58,41 @@ public class MainActivity extends AppCompatActivity {
                 bookItemActivities.clear();
                 utility.keyPadDown(getApplicationContext() ,editText);
                 keyword = editText.getText().toString();
-                listOpenMethod();
+                getListData();
+            }
+        });
+    }
+
+    //
+    public void listSetting(){
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), BookDetailActivity.class);
+
+                intent.putExtra("title", bookItemActivities.get(i).title);
+                intent.putExtra("author", bookItemActivities.get(i).authors);
+                intent.putExtra("ImageUrl", bookItemActivities.get(i).ImageUrl);
+
+                startActivity(intent);
             }
         });
     }
 
 
-    public void listOpenMethod() {
+    //Data를 가져오는 로직
+    public void getListData() {
         queue = Volley.newRequestQueue(getApplicationContext());
         String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
         Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
         CustomJSONObjectRequest customJSONObjectRequest = new CustomJSONObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = new Intent(getApplicationContext(), BookDetailActivity.class);
-
-                        intent.putExtra("title", bookItemActivities.get(i).title);
-                        intent.putExtra("author", bookItemActivities.get(i).authors);
-                        intent.putExtra("ImageUrl", bookItemActivities.get(i).ImageUrl);
-
-                        startActivity(intent);
-                    }
-                });
                 Log.e(TAG, response.toString());
+
+                //listveiw에 adapter연결 ,list 상세 Activity 띄어주는 메소드
+                listSetting();
 
                 try {
                     JSONArray jsonArrayDoumnets = response.getJSONArray("documents");

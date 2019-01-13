@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
 /////////////////////////////////////////////////////
 
-
+    Utility utility;
     ListView listView;
     Button searchButton;
     BookSearchAdapter adapter;
@@ -52,14 +52,13 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.serach_edit_text);
         adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
         listView = findViewById(R.id.listView);
-
+        utility =new Utility();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bookItemActivities.clear();
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                utility.keyPadDown(getApplicationContext() ,editText);
                 keyword = editText.getText().toString();
                 listOpenMethod();
             }

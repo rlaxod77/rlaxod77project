@@ -1,16 +1,16 @@
 package study.booksearch.com.sampleservice;
 
-public class BookItemActivity {
+public class BookItem {
 
     String title;
     String authors;
     String ImageUrl;
 
-    public BookItemActivity() {
+    public BookItem() {
     }
 
 
-    public BookItemActivity(String title, String authors, String imageUrl) {
+    public BookItem(String title, String authors, String imageUrl) {
         this.title = title;
         this.authors = authors;
         this.ImageUrl = imageUrl;

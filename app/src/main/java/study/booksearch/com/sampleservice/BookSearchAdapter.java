@@ -19,10 +19,10 @@ public class BookSearchAdapter extends BaseAdapter {
 
     //아이템 데이터 리스트
 
-    private ArrayList<BookItemActivity> listViewItemlist;
+    private ArrayList<BookItem> listViewItemlist;
     ViewHolder viewHolder;
 
-    public BookSearchAdapter(Context context, int layout, ArrayList<BookItemActivity> listViewItemlist) {
+    public BookSearchAdapter(Context context, int layout, ArrayList<BookItem> listViewItemlist) {
         this.context = context;
         this.layout = layout;
         this.listViewItemlist = listViewItemlist;
@@ -46,7 +46,7 @@ public class BookSearchAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.activity_book_item, null);
 
             //DATA SET (listViewItemlist에 위치한 데이터 참조 획득
-            //BookItemActivity listViewItem = listViewItemlist.get(position);
+            //BookItem listViewItem = listViewItemlist.get(position);
             viewHolder = new ViewHolder();
 
 

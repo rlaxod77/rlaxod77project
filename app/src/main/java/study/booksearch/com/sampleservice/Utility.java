@@ -10,7 +10,7 @@ import android.widget.EditText;
 public class Utility extends AppCompatActivity {
 
 
-        public void keyPadDown(Context context, EditText editText){
+        public void onKeyPadDown(Context context, EditText editText){
             InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         }

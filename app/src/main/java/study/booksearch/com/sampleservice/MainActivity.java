@@ -50,15 +50,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 bookItemActivities.clear();
-                utility.keyPadDown(getApplicationContext() ,editText);
+                utility.onKeyPadDown(getApplicationContext() ,editText);
                 keyword = editText.getText().toString();
-                getListData();
+                onGetListData();
             }
         });
     }
 
     //
-    public void listSetting(){
+    public void onListSetting(){
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //Data를 가져오는 로직
-    public void getListData() {
+    public void onGetListData() {
         queue = Volley.newRequestQueue(getApplicationContext());
         String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
         Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 //listveiw에 adapter연결 ,list 상세 Activity 띄어주는 메소드
-                listSetting();
+                onListSetting();
 
                 //JSDON 정보 파싱하여 ArrayList에 추가
                 bookIteamJasonParser.getBookItemJasonObject(response,bookItemActivities);

@@ -44,21 +44,24 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.serach_edit_text);
         adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
         listView = findViewById(R.id.listView);
-        utility =new Utility();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bookItemActivities.clear();
-                utility.onKeyPadDown(getApplicationContext() ,editText);
+                Utility.onKeyPadDown(getApplicationContext() ,editText);
                 keyword = editText.getText().toString();
-                onGetListData();
+                getListData();
             }
         });
     }
 
     //
-    public void onListSetting(){
+    public void
+
+
+    //
+    public void setListSetting(){
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,17 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     //Data를 가져오는 로직
-    public void onGetListData() {
+    public void getListData() {
         queue = Volley.newRequestQueue(getApplicationContext());
         String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword;
-        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
         bookIteamJasonParser = new BookIteamJasonParser();
 
         CustomJSONObjectRequest customJSONObjectRequest = new CustomJSONObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 //listveiw에 adapter연결 ,list 상세 Activity 띄어주는 메소드
-                onListSetting();
+                setListSetting();
 
                 //JSDON 정보 파싱하여 ArrayList에 추가
                 bookIteamJasonParser.getBookItemJasonObject(response,bookItemActivities);

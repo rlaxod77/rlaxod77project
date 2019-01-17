@@ -25,14 +25,13 @@ public class MainActivity extends AppCompatActivity {
     //Volley 셋팅
     private static final String TAG = "MAIN";
     private RequestQueue queue;
-
-    Utility utility;
-    ListView listView;
-    BookSearchAdapter adapter;
-    String keyword;
-    EditText editText;
-    ArrayList<BookItem> bookItemActivities = new ArrayList<BookItem>();
-    BookIteamJasonParser bookIteamJasonParser;
+    private ListView listView;
+    private BookSearchAdapter adapter;
+    private String keyword;
+    private EditText editText;
+    private ArrayList<BookItem> bookItemActivities = new ArrayList<BookItem>();
+    private BookIteamJasonParser bookIteamJasonParser;
+    private Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button searchButton = findViewById(R.id.buttonSearch);
-        editText = findViewById(R.id.serach_edit_text);
-        adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
-        listView = findViewById(R.id.listView);
-
+        setViewItem();
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +52,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //
-    public void
+    public void setViewItem(){
+        searchButton = findViewById(R.id.buttonSearch);
+        editText = findViewById(R.id.serach_edit_text);
+        adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
+        listView = findViewById(R.id.listView);
+    }
 
 
     //

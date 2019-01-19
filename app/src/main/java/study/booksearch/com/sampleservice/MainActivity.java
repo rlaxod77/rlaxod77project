@@ -1,6 +1,8 @@
 package study.booksearch.com.sampleservice;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,48 +31,66 @@ public class MainActivity extends AppCompatActivity {
     private BookSearchAdapter adapter;
     private String keyword;
     private EditText editText;
-    private ArrayList<BookItem> bookItemActivities = new ArrayList<BookItem>();
+    private ArrayList<BookItem> bookItemArrayList = new ArrayList<BookItem>();
     private BookIteamJasonParser bookIteamJasonParser;
     private Button searchButton;
+    SharedPreferences setting;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setView();
+        setting = getSharedPreferences("setting",0);
+        editor = setting.edit();
+
+        if (setting.getBoolean("Auto_EditText_Write", false)) {
+            editText.setText(setting.getString("KEYWORD", ""));
+        }
 
 
-        setViewItem();
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bookItemActivities.clear();
-                Utility.onKeyPadDown(getApplicationContext() ,editText);
+                bookItemArrayList.clear();
+                Utility.onKeyPadDown(getApplicationContext(), editText);
                 keyword = editText.getText().toString();
+                if (editText != null) {
+                    String saveKeyword = keyword;
+                    editor.putString("KEYWORD", saveKeyword);
+                    editor.putBoolean("Auto_EditText_Write", true);
+                    editor.commit();
+                } else {
+                    editor.clear();
+                    editor.commit();
+                }
                 getListData();
             }
         });
+
     }
 
     //
-    public void setViewItem(){
+    public void setView() {
         searchButton = findViewById(R.id.buttonSearch);
         editText = findViewById(R.id.serach_edit_text);
-        adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemActivities);
+        adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemArrayList);
         listView = findViewById(R.id.listView);
     }
 
 
     //
-    public void setListSetting(){
+    public void setListView() {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), BookDetailActivity.class);
 
-                intent.putExtra("title", bookItemActivities.get(i).title);
-                intent.putExtra("author", bookItemActivities.get(i).authors);
-                intent.putExtra("ImageUrl", bookItemActivities.get(i).ImageUrl);
+                intent.putExtra("title", bookItemArrayList.get(i).title);
+                intent.putExtra("author", bookItemArrayList.get(i).authors);
+                intent.putExtra("ImageUrl", bookItemArrayList.get(i).ImageUrl);
 
                 startActivity(intent);
             }
@@ -89,10 +109,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 //listveiw에 adapter연결 ,list 상세 Activity 띄어주는 메소드
-                setListSetting();
+                setListView();
 
                 //JSDON 정보 파싱하여 ArrayList에 추가
-                bookIteamJasonParser.getBookItemJasonObject(response,bookItemActivities);
+                bookIteamJasonParser.getBookItemJasonObject(response, bookItemArrayList);
 
             }
 

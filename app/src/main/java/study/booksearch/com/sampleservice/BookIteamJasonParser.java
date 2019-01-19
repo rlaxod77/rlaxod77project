@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class BookIteamJasonParser {
 
 
-    public void getBookItemJasonObject(JSONObject response, ArrayList<BookItem> bookItemActivities ){
+    public void getBookItemJasonObject(JSONObject response, ArrayList<BookItem> bookItemArrayList ){
         try {
             JSONArray jsonArrayDoumnets = response.getJSONArray("documents");
             for (int i = 0; i < jsonArrayDoumnets.length(); i++) {
@@ -25,7 +25,7 @@ public class BookIteamJasonParser {
                 final String title = jsonDocument.getString("title");
                 final String ImageUrl = jsonDocument.getString("thumbnail");
 
-                bookItemActivities.add(new BookItem(title, author, ImageUrl));
+                bookItemArrayList.add(new BookItem(title, author, ImageUrl));
 
 
             }

@@ -42,12 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setView();
-        setting = getSharedPreferences("setting",0);
-        editor = setting.edit();
-
-        if (setting.getBoolean("Auto_EditText_Write", false)) {
-            editText.setText(setting.getString("KEYWORD", ""));
-        }
+        loadEditText();
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -56,21 +51,31 @@ public class MainActivity extends AppCompatActivity {
                 bookItemArrayList.clear();
                 Utility.onKeyPadDown(getApplicationContext(), editText);
                 keyword = editText.getText().toString();
-                if (editText != null) {
-                    String saveKeyword = keyword;
-                    editor.putString("KEYWORD", saveKeyword);
-                    editor.putBoolean("Auto_EditText_Write", true);
-                    editor.commit();
-                } else {
-                    editor.clear();
-                    editor.commit();
-                }
+                saveEditText();
                 getListData();
             }
         });
 
     }
+    public void loadEditText(){
+        setting = getSharedPreferences("setting",0);
+        editor = setting.edit();
+        if (setting.getBoolean("Auto_EditText_Write", false)) {
+            editText.setText(setting.getString("KEYWORD", ""));
+        }
+    }
 
+    public void saveEditText(){
+        if (editText != null) {
+            String saveKeyword = keyword;
+            editor.putString("KEYWORD", saveKeyword);
+            editor.putBoolean("Auto_EditText_Write", true);
+            editor.commit();
+        } else {
+            editor.clear();
+            editor.commit();
+        }
+    }
     //
     public void setView() {
         searchButton = findViewById(R.id.buttonSearch);

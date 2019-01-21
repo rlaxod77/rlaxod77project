@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean mLocListView = false;
     private boolean lastItemVisibleFlag = false;
     boolean firstButtonClick = false;
-
+    int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +55,15 @@ public class MainActivity extends AppCompatActivity {
         setView();
         loadEditText();
 
-
-
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bookItemArrayList.clear();
+                page=1;
                 Utility.onKeyPadDown(getApplicationContext(), editText);
                 keyword = editText.getText().toString();
                 saveEditText();
                 getListData();
-
-
             }
         });
 
@@ -107,12 +103,14 @@ public class MainActivity extends AppCompatActivity {
     //
     public void setListView() {
         listView.setAdapter(adapter);
+        listView.setSelection(adapter.getCount() - 1);
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
                 if(scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag && mLocListView ==false){
                     progressBar.setVisibility(View.GONE);
                     getListData();
+
 
                 }
             }
@@ -140,9 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Data를 가져오는 로직
     public void getListData() {
-        if(firstButtonClick=false) {
-
-
+        if(firstButtonClick) {
             queue = Volley.newRequestQueue(getApplicationContext());
             String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
             //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();

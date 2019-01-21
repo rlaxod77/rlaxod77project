@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean mLocListView = false;
     private boolean lastItemVisibleFlag = false;
     boolean firstButtonClick = false;
-    int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 bookItemArrayList.clear();
-                page=1;
+                page = 1;
                 Utility.onKeyPadDown(getApplicationContext(), editText);
                 keyword = editText.getText().toString();
                 saveEditText();
@@ -69,15 +68,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void loadEditText(){
-        setting = getSharedPreferences("setting",0);
+
+    public void loadEditText() {
+        setting = getSharedPreferences("setting", 0);
         editor = setting.edit();
         if (setting.getBoolean("Auto_EditText_Write", false)) {
             editText.setText(setting.getString("KEYWORD", ""));
         }
     }
 
-    public void saveEditText(){
+    public void saveEditText() {
         if (editText != null) {
             String saveKeyword = keyword;
             editor.putString("KEYWORD", saveKeyword);
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             editor.commit();
         }
     }
+
     //
     public void setView() {
         searchButton = findViewById(R.id.buttonSearch);
@@ -104,20 +105,20 @@ public class MainActivity extends AppCompatActivity {
     public void setListView() {
         listView.setAdapter(adapter);
         listView.setSelection(adapter.getCount() - 1);
+
+        //스크롤 시 페이징 처리 하는 부분
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-                if(scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag && mLocListView ==false){
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag && mLocListView == false) {
                     progressBar.setVisibility(View.GONE);
                     getListData();
-
-
                 }
             }
 
             @Override
             public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                lastItemVisibleFlag = (totalItemCount >0) && (firstVisibleItem + visibleItemCount >= totalItemCount);
+                lastItemVisibleFlag = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount);
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -138,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Data를 가져오는 로직
     public void getListData() {
-        if(firstButtonClick) {
+        //버튼으로 검색하는 데이타
+        if (firstButtonClick) {
             queue = Volley.newRequestQueue(getApplicationContext());
             String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
             //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
@@ -148,29 +150,24 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     //listveiw에 adapter연결 ,list 상세 Activity 띄어주는 메소드
-
-
                     setListView();
-
                     //JSDON 정보 파싱하여 ArrayList에 추가
                     bookIteamJasonParser.getBookItemJasonObject(response, bookItemArrayList);
-
                 }
 
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
                 }
             }
             );
             queue.add(customJSONObjectRequest);
             //
-            firstButtonClick=true;
-
-        }else{
+            firstButtonClick = true;
+            //스크롤하여 페이징하여 가져오는 데이타
+        } else {
             mLocListView = true;
-            page ++;
+            page++;
             queue = Volley.newRequestQueue(getApplicationContext());
             String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
             //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
@@ -191,8 +188,7 @@ public class MainActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                             mLocListView = false;
                         }
-                    },1000);
-
+                    }, 1000);
                 }
 
             }, new Response.ErrorListener() {

@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
 
         progressBar = findViewById(R.id.progressbar);
+        setListView();
 
     }
 
@@ -104,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
     //
     public void setListView() {
         listView.setAdapter(adapter);
-        listView.setSelection(adapter.getCount() - 1);
-
         //스크롤 시 페이징 처리 하는 부분
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     //listveiw에 adapter연결 ,list 상세 Activity 띄어주는 메소드
-                    setListView();
+                    adapter.notifyDataSetChanged();
                     //JSDON 정보 파싱하여 ArrayList에 추가
                     bookIteamJasonParser.getBookItemJasonObject(response, bookItemArrayList);
                 }
@@ -177,18 +176,22 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     //listveiw에 adapter연결 ,list 상세 Activity 띄어주는 메소드
-                    setListView();
 
                     //JSDON 정보 파싱하여 ArrayList에 추가
                     bookIteamJasonParser.getBookItemJasonObject(response, bookItemArrayList);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                            progressBar.setVisibility(View.GONE);
-                            mLocListView = false;
-                        }
-                    }, 1000);
+
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
+                    mLocListView = false;
+                    progressBar.setVisibility(View.GONE);
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            adapter.notifyDataSetChanged();
+//                            progressBar.setVisibility(View.GONE);
+//                            mLocListView = false;
+//                        }
+//                    }, 1000);
                 }
 
             }, new Response.ErrorListener() {

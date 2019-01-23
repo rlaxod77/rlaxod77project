@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class BookIteamJSONParser {
 
 
-    public void getBookItemJasonObject(JSONObject response, ArrayList<BookItem> bookItemArrayList ){
+    public static void getBookItemJasonObject(JSONObject response, ArrayList<BookItem> bookItemArrayList ){
         try {
             JSONArray jsonArrayDoumnets = response.getJSONArray("documents");
             for (int i = 0; i < jsonArrayDoumnets.length(); i++) {

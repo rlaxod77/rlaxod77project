@@ -1,9 +1,7 @@
 package study.booksearch.com.sampleservice;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private String keyword;
     private EditText editText;
     private ArrayList<BookItem> bookItemArrayList = new ArrayList<BookItem>();
-    private BookIteamJasonParser bookIteamJasonParser;
+    private BookIteamJSONParser bookIteamJasonParser;
     private Button searchButton;
     SharedPreferences setting;
     SharedPreferences.Editor editor;
@@ -143,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             queue = Volley.newRequestQueue(getApplicationContext());
             String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
             //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
-            bookIteamJasonParser = new BookIteamJasonParser();
+            bookIteamJasonParser = new BookIteamJSONParser();
 
             CustomJSONObjectRequest customJSONObjectRequest = new CustomJSONObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
@@ -170,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             queue = Volley.newRequestQueue(getApplicationContext());
             String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
             //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
-            bookIteamJasonParser = new BookIteamJasonParser();
+            bookIteamJasonParser = new BookIteamJSONParser();
 
             CustomJSONObjectRequest customJSONObjectRequest = new CustomJSONObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override

@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BookIteamJasonParser {
+public class BookIteamJSONParser {
 
 
     public void getBookItemJasonObject(JSONObject response, ArrayList<BookItem> bookItemArrayList ){

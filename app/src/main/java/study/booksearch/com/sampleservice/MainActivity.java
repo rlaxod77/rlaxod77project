@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setView();
 
         editText.setText(PreferenceManager.getString(getApplication(),PREF_KEY ));
-        Toast.makeText(getApplicationContext(), PreferenceManager.getString(getApplication(),PREF_KEY ), Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), PreferenceManager.getString(getApplication(),PREF_KEY ), Toast.LENGTH_LONG).show();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override

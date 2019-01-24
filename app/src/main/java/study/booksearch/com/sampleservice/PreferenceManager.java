@@ -18,12 +18,12 @@ public class PreferenceManager {
 
 
     public static String getString(Context c, String key) {
-        String aa = null;
+        String keyword = null;
         initialize(c);
         if (preferences.getBoolean("Auto_EditText_Write", false)) {
-            aa =  preferences.getString(key,"");
+            keyword =  preferences.getString(key,"");
          }
-        return aa;
+        return keyword;
     }
 
     public static void setString(Context c, String key ,String value) {

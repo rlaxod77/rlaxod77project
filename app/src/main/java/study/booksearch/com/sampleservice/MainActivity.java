@@ -75,15 +75,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void saveEditText() {
-        if (editText != null) {
             String saveKeyword = keyword;
             editor.putString("KEYWORD", saveKeyword);
             editor.putBoolean("Auto_EditText_Write", true);
             editor.commit();
-        } else {
-            editor.clear();
-            editor.commit();
-        }
     }
 
     //
@@ -92,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.serach_edit_text);
         adapter = new BookSearchAdapter(getApplicationContext(), R.layout.activity_book_item, bookItemArrayList);
         listView = findViewById(R.id.listView);
-
         progressBar = findViewById(R.id.progressbar);
         setListView();
 

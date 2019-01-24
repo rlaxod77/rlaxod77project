@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private String keyword;
     private EditText editText;
     private ArrayList<BookItem> bookItemArrayList = new ArrayList<BookItem>();
-    private BookIteamJSONParser bookIteamJasonParser;
+    private BookItemJSONParser bookIteamJasonParser;
     private Button searchButton;
     SharedPreferences setting;
     SharedPreferences.Editor editor;
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             queue = Volley.newRequestQueue(getApplicationContext());
             String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
             //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
-            bookIteamJasonParser = new BookIteamJSONParser();
+            bookIteamJasonParser = new BookItemJSONParser();
 
             CustomJSONObjectRequest customJSONObjectRequest = new CustomJSONObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             queue = Volley.newRequestQueue(getApplicationContext());
             String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
             //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
-            //bookIteamJasonParser = new BookIteamJSONParser();
+            //bookIteamJasonParser = new BookItemJSONParser();
 
             CustomJSONObjectRequest customJSONObjectRequest = new CustomJSONObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     //listveiw에 adapter연결 ,list 상세 Activity 띄어주는 메소드
 
                     //JSDON 정보 파싱하여 ArrayList에 추가
-                    BookIteamJSONParser.getBookItemJasonObject(response, bookItemArrayList);
+                    BookItemJSONParser.getBookItemJasonObject(response, bookItemArrayList);
 
                     adapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);

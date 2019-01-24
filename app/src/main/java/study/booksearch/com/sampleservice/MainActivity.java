@@ -1,5 +1,6 @@
 package study.booksearch.com.sampleservice;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -34,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<BookItem> bookItemArrayList = new ArrayList<BookItem>();
     private BookItemJSONParser bookIteamJasonParser;
     private Button searchButton;
-    SharedPreferences setting;
-    SharedPreferences.Editor editor;
+
+//    SharedPreferences setting;
+//    SharedPreferences.Editor editor;
 
     //list paging
     private int page = 1;
@@ -43,13 +45,15 @@ public class MainActivity extends AppCompatActivity {
     private boolean mLocListView = false;
     private boolean lastItemVisibleFlag = false;
     boolean firstButtonClick = false;
-
+    //PreferenceManager preferenceManager = new PreferenceManager();
+    String a = "KK";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setView();
-        loadEditText();
+        editText.setText(PreferenceManager.getString(getApplication(),a ));
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,28 +62,30 @@ public class MainActivity extends AppCompatActivity {
                 page = 1;
                 Utility.onKeyPadDown(getApplicationContext(), editText);
                 keyword = editText.getText().toString();
-                saveEditText();
                 getListData();
+                PreferenceManager.setString(getApplication(),a,keyword);
+
             }
         });
 
 
     }
 
-    public void loadEditText() {
-        setting = getSharedPreferences("setting", 0);
-        editor = setting.edit();
-        if (setting.getBoolean("Auto_EditText_Write", false)) {
-            editText.setText(setting.getString("KEYWORD", ""));
-        }
-    }
 
-    public void saveEditText() {
-            String saveKeyword = keyword;
-            editor.putString("KEYWORD", saveKeyword);
-            editor.putBoolean("Auto_EditText_Write", true);
-            editor.commit();
-    }
+//    public void loadEditText() {
+//        setting = getSharedPreferences("setting", 0);
+//        editor = setting.edit();
+//        if (setting.getBoolean("Auto_EditText_Write", false)) {
+////            editText.setText(setting.getString("KEYWORD", ""));
+////        }
+//    }
+//
+//    public void saveEditText() {
+//            String saveKeyword = keyword;
+//            editor.putString("KEYWORD", saveKeyword);
+//            editor.putBoolean("Auto_EditText_Write", true);
+//            editor.commit();
+//    }
 
     //
     public void setView() {

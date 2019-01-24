@@ -26,9 +26,9 @@ public class PreferenceManager {
         return aa;
     }
 
-    public static void setString(Context c, String key ,String s) {
+    public static void setString(Context c, String key ,String value) {
         initialize(c);
-        editor.putString(key,s);
+        editor.putString(key,value);
         editor.putBoolean("Auto_EditText_Write", true);
         editor.commit();
     }

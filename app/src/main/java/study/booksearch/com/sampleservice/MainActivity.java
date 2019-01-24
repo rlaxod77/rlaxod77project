@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,14 +47,15 @@ public class MainActivity extends AppCompatActivity {
     private boolean lastItemVisibleFlag = false;
     boolean firstButtonClick = false;
     //PreferenceManager preferenceManager = new PreferenceManager();
-    String a = "KK";
+    private String PREF_KEY = "KEYWORD";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setView();
-        editText.setText(PreferenceManager.getString(getApplication(),a ));
 
+        editText.setText(PreferenceManager.getString(getApplication(),PREF_KEY ));
+        Toast.makeText(getApplicationContext(), PreferenceManager.getString(getApplication(),PREF_KEY ), Toast.LENGTH_LONG).show();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 Utility.onKeyPadDown(getApplicationContext(), editText);
                 keyword = editText.getText().toString();
                 getListData();
-                PreferenceManager.setString(getApplication(),a,keyword);
+                PreferenceManager.setString(getApplication(),PREF_KEY,keyword);
 
             }
         });

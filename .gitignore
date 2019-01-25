@@ -11,5 +11,7 @@
 .externalNativeBuild
 /.idea/gradle.xml
 /.idea/misc.xml
-/.idea/runConfiguration.xml
-/.idea/vsc.xml
+/.idea/runConfigurations.xml
+/.idea/vcs.xml
+/.idea/gradle.xml
+/.misc.xml

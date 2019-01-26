@@ -8,9 +8,9 @@ public class PreferenceManager {
     private static SharedPreferences preferences;
     private static SharedPreferences.Editor editor;
 
-    private static void initialize(Context c){
-        if(preferences == null){
-            preferences = c.getSharedPreferences("pref",Context.MODE_PRIVATE);
+    private static void initialize(Context c) {
+        if (preferences == null) {
+            preferences = c.getSharedPreferences("pref", Context.MODE_PRIVATE);
             editor = preferences.edit();
         }
 
@@ -20,16 +20,15 @@ public class PreferenceManager {
     public static String getString(Context c, String key) {
         String keyword = null;
         initialize(c);
-        if (preferences.getBoolean("Auto_EditText_Write", false)) {
-            keyword =  preferences.getString(key,"");
-         }
+        if (preferences.contains(key)) {
+            keyword = preferences.getString(key, "");
+        }
         return keyword;
     }
 
-    public static void setString(Context c, String key ,String value) {
+    public static void setString(Context c, String key, String value) {
         initialize(c);
-        editor.putString(key,value);
-        editor.putBoolean("Auto_EditText_Write", true);
+        editor.putString(key, value);
         editor.commit();
     }
 }

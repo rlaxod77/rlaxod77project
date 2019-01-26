@@ -36,41 +36,17 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<BookItem> bookItemArrayList = new ArrayList<BookItem>();
     private BookItemJSONParser bookIteamJasonParser;
     private Button searchButton;
-
-//    SharedPreferences setting;
-//    SharedPreferences.Editor editor;
-
-    //list paging
     private int page = 1;
     private ProgressBar progressBar;
     private boolean mLocListView = false;
     private boolean lastItemVisibleFlag = false;
     boolean firstButtonClick = false;
-    //PreferenceManager preferenceManager = new PreferenceManager();
     private String PREF_KEY = "KEYWORD";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setView();
-
-        editText.setText(PreferenceManager.getString(getApplication(),PREF_KEY ));
-        //Toast.makeText(getApplicationContext(), PreferenceManager.getString(getApplication(),PREF_KEY ), Toast.LENGTH_LONG).show();
-
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bookItemArrayList.clear();
-                page = 1;
-                Utility.onKeyPadDown(getApplicationContext(), editText);
-                keyword = editText.getText().toString();
-                getListData();
-                PreferenceManager.setString(getApplication(),PREF_KEY,keyword);
-
-            }
-        });
-
-
     }
 
 
@@ -97,7 +73,18 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         progressBar = findViewById(R.id.progressbar);
         setListView();
-
+        editText.setText(PreferenceManager.getString(getApplication(),PREF_KEY ));
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bookItemArrayList.clear();
+                page = 1;
+                Utility.onKeyPadDown(getApplicationContext(), editText);
+                keyword = editText.getText().toString();
+                getListData();
+                PreferenceManager.setString(getApplication(),PREF_KEY,keyword);
+            }
+        });
     }
 
 

@@ -16,15 +16,14 @@ public class BookDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail_view);
 
-
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String title2 = "책제목 : ";
+        String title = intent.getStringExtra(Constant.BOOK_TITLE);
+        String title2 = Constant.BOOK_TITLE2;
         String title3 = title2 + title;
-        String author = intent.getStringExtra("author");
-        String autor2 = "글쓴이 : ";
+        String author = intent.getStringExtra(Constant.BOOK_AUTHOR);
+        String autor2 = Constant.BOOK_AUTHOR2;
         String autor3 = autor2 + author;
-        String ImageUrl = intent.getStringExtra("ImageUrl");
+        String ImageUrl = intent.getStringExtra(Constant.BOOK_IMAGEURL);
 
         ImageView BookImg = findViewById(R.id.DetailImageView);
         TextView BookTitle = findViewById(R.id.DetailTitleVeiw);
@@ -36,4 +35,6 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
     }
+
+
 }

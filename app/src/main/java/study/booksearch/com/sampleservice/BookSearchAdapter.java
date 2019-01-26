@@ -45,8 +45,7 @@ public class BookSearchAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.activity_book_item, null);
 
-            //DATA SET (listViewItemlist에 위치한 데이터 참조 획득
-            //BookItem listViewItem = listViewItemlist.get(position);
+            //DATA SET (listViewItemlist)에 위치한 데이터 참조 획득
             viewHolder = new ViewHolder();
 
 
@@ -54,12 +53,6 @@ public class BookSearchAdapter extends BaseAdapter {
             viewHolder.authors = (TextView) convertView.findViewById(R.id.authors);
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.ImageView);
             convertView.setTag(viewHolder);
-
-            //viewHolder.TextView.setText(listViewItem.getTitle());
-            //viewHolder.authors.setText(listViewItem.getAuthors());
-            //이미지뷰
-            //Glide.with(context).load(listViewItem.getImageUrl()).into(viewHolder.imageView);
-
 
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

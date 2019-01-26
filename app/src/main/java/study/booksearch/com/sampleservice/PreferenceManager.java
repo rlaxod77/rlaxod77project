@@ -2,7 +2,6 @@ package study.booksearch.com.sampleservice;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 
 public class PreferenceManager {
     private static SharedPreferences preferences;
@@ -10,7 +9,7 @@ public class PreferenceManager {
 
     private static void initialize(Context c) {
         if (preferences == null) {
-            preferences = c.getSharedPreferences("pref", Context.MODE_PRIVATE);
+            preferences = c.getSharedPreferences(Constant.PERF, Context.MODE_PRIVATE);
             editor = preferences.edit();
         }
 

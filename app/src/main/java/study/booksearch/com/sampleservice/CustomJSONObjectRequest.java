@@ -24,7 +24,7 @@ public class CustomJSONObjectRequest extends JsonObjectRequest {
     //볼리소스 4 헤더값 전달 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        String key = Constant.appkey;
+        String key = Constant.APP_KEY;
         Map<String, String> params = new HashMap();
         params.put("Authorization", key);
         return params;

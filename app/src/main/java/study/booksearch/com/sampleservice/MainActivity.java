@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean mLocListView = false;
     private boolean lastItemVisibleFlag = false;
     boolean firstButtonClick = false;
-    private String PREF_KEY = "KEYWORD";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,23 +49,6 @@ public class MainActivity extends AppCompatActivity {
         setView();
     }
 
-
-//    public void loadEditText() {
-//        setting = getSharedPreferences("setting", 0);
-//        editor = setting.edit();
-//        if (setting.getBoolean("Auto_EditText_Write", false)) {
-////            editText.setText(setting.getString("KEYWORD", ""));
-////        }
-//    }
-//
-//    public void saveEditText() {
-//            String saveKeyword = keyword;
-//            editor.putString("KEYWORD", saveKeyword);
-//            editor.putBoolean("Auto_EditText_Write", true);
-//            editor.commit();
-//    }
-
-    //
     public void setView() {
         searchButton = findViewById(R.id.buttonSearch);
         editText = findViewById(R.id.serach_edit_text);
@@ -73,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         progressBar = findViewById(R.id.progressbar);
         setListView();
-        editText.setText(PreferenceManager.getString(getApplication(),PREF_KEY ));
+        editText.setText(PreferenceManager.getString(getApplication(), Constant.PREF_KEY));
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,13 +65,11 @@ public class MainActivity extends AppCompatActivity {
                 Utility.onKeyPadDown(getApplicationContext(), editText);
                 keyword = editText.getText().toString();
                 getListData();
-                PreferenceManager.setString(getApplication(),PREF_KEY,keyword);
+                PreferenceManager.setString(getApplication(), Constant.PREF_KEY, keyword);
             }
         });
     }
 
-
-    //
     public void setListView() {
         listView.setAdapter(adapter);
         //스크롤 시 페이징 처리 하는 부분
@@ -111,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), BookDetailActivity.class);
 
-                intent.putExtra("title", bookItemArrayList.get(i).title);
-                intent.putExtra("author", bookItemArrayList.get(i).authors);
-                intent.putExtra("ImageUrl", bookItemArrayList.get(i).ImageUrl);
+                intent.putExtra(Constant.BOOK_TITLE, bookItemArrayList.get(i).title);
+                intent.putExtra(Constant.BOOK_AUTHOR, bookItemArrayList.get(i).authors);
+                intent.putExtra(Constant.BOOK_IMAGEURL, bookItemArrayList.get(i).ImageUrl);
 
                 startActivity(intent);
             }
@@ -127,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
         //버튼으로 검색하는 데이타
         if (firstButtonClick) {
             queue = Volley.newRequestQueue(getApplicationContext());
-            String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
-            //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
+            String url = Constant.BOOK_SEARCH_URL + keyword + Constant.PAGE + page;
             bookIteamJasonParser = new BookItemJSONParser();
 
             CustomJSONObjectRequest customJSONObjectRequest = new CustomJSONObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -154,10 +134,7 @@ public class MainActivity extends AppCompatActivity {
             mLocListView = true;
             page++;
             queue = Volley.newRequestQueue(getApplicationContext());
-            String url = "https://dapi.kakao.com/v3/search/book?target=title&size=10&query=" + keyword + "&page=" + page;
-            //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
-            //bookIteamJasonParser = new BookItemJSONParser();
-
+            String url = Constant.BOOK_SEARCH_URL + keyword + Constant.PAGE + page;
             CustomJSONObjectRequest customJSONObjectRequest = new CustomJSONObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -170,14 +147,6 @@ public class MainActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     mLocListView = false;
                     progressBar.setVisibility(View.GONE);
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            adapter.notifyDataSetChanged();
-//                            progressBar.setVisibility(View.GONE);
-//                            mLocListView = false;
-//                        }
-//                    }, 1000);
                 }
 
             }, new Response.ErrorListener() {

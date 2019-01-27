@@ -1,8 +1,6 @@
 package study.booksearch.com.sampleservice;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button searchButton;
     private int page = 1;
     private ProgressBar progressBar;
-    private boolean mLocListView = false;
+    private boolean mLockListView = false;
     private boolean lastItemVisibleFlag = false;
     boolean firstButtonClick = false;
 
@@ -56,7 +53,12 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         progressBar = findViewById(R.id.progressbar);
         setListView();
-        editText.setText(PreferenceManager.getString(getApplication(), Constant.PREF_KEY));
+        if(PreferenceManager.getString(getApplication(), Constant.PREF_KEY)!=null){
+            editText.setText(PreferenceManager.getString(getApplication(), Constant.PREF_KEY));
+        }else {
+            editText.setText("");
+        }
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag && mLocListView == false) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag && mLockListView == false) {
                     progressBar.setVisibility(View.GONE);
                     getListData();
                 }
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             firstButtonClick = true;
             //스크롤하여 페이징하여 가져오는 데이타
         } else {
-            mLocListView = true;
+            mLockListView = true;
             page++;
             queue = Volley.newRequestQueue(getApplicationContext());
             String url = Constant.BOOK_SEARCH_URL + keyword + Constant.PAGE + page;
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
                     adapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);
-                    mLocListView = false;
+                    mLockListView = false;
                     progressBar.setVisibility(View.GONE);
                 }
 
